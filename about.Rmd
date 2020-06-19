@@ -2,4 +2,4 @@
 title: "About"
 ---
 
-First few plots
+First few plot
