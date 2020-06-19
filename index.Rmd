@@ -1,5 +1,65 @@
 ---
-title: "Brief Summary"
+title: "Motivation"
 ---
 
-Homepage
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(gapminder)
+library(DT)
+library(htmlwidgets)
+library(base)
+library(hablar)
+library(tidyr)
+library(viridis)
+library(hrbrthemes)
+```
+
+Catalysed by the killing of George Floyd, police departments across the US have come under public scrutiny. This was just one of the many recorded examples of police brutality against BAME citizens which, for many, was the final straw in remaining compliant. In light of this, data collected mainly from [Washington Post](https://github.com/washingtonpost/data-police-shootings), [FiveThirtyEight](https://projects.fivethirtyeight.com/republicans-democrats-cities/) and US Census Data may be used to investigate the extent of police misconduct and, further to this, to uncover institutionalised racism that is woven through the fabric of the police force.
+
+<br>
+
+## The Data
+
+A brief snippet of the data can be seen below. There are only 200 rows shown, but the dataset actually covers the deaths of 7907 people. Some of the more important columns have been included in the interest of brevity, however there is much more information available.
+
+```{r Police Killings Data,echo = FALSE}
+police_killings <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_killings.csv",header = TRUE)
+police_killings2 <- police_killings[c(1:200),c(1,2,3,4,8,12,13,14,19,20)]
+datatable(police_killings2, options = list(pageLength = 5,pageWidth=5),rownames = FALSE,colnames = c("Victim","Age","Sex","Race","City","Responsible Police Agency","Cause of Death","Brief Description","Armed?","Alleged Weapon"))
+```
+
+In many cases, the use of a guns by the police was completely necessary and lawful (the accessibility of guns to the general US public is another debate entirely). Undoubtedly there are instances where the police saved innocent lives, one need only take a look at some of the data above. It's dangerous in statistics to advocate the use of anecdotes to argue a point, but I deem it necessary in this case to at least prove the point that there are instances of complete lapse in judgment, to put it mildly.
+
+<br>
+
+### _"Police said they shot and killed the man after he hit the windshield of a patrol car and ignored commands from police. He was carrying a toy broomstick."_
+
+### _"Euharlee police said 17-year-old Christopher Roupe pointed a gun at one of their officers on Feb. 14, when officers knocked on the door of the family's home to serve a probation warrant for Roupe's father. Family members, however, said the teen was holding a Nintendo Wii controller."_
+
+### _"Police contacted Henry Lane shortly after midnight for unspecified reasons. Red Bluff Cpl. Stephen Harper shot and killed him when Lane threatened officers with a (walking) stick."_
+
+</br>
+
+## Limitations
+
+Whilst there is a lot of data present, the size of the dataset is certainly a lower bound for the number of citizens killed by police- much of the information has been attained through exhaustive search of police records and news articles. As a result there are a few problems in our analysis: 
+
+* Reliance on police records for data is to undermine the intrinsic assumption that there exists misconduct within the police. It relies on the police reports being true, even without a bodycam present.
+* Though I'm sure the list of killings is almost entirely exhaustive, it is likely that certain reports or articles have 'slipped through the net' or have remained undocumented altogether. After all, the very nature of this investigation is sparked by alleged police inadequacy.
+
+If the data collected is full and accurate, then any analyses or statements made are on solid foundations. If, however, some data is missing, this will likely manifest itself into two categories:
+
+1. A **homogeneously missing** dataset in which reports are 'lost' at similar rates regardless of the race of citizen.
+2. A **biasedly missing** dataset in which reports are 'lost' more frequently in incidents involving BAME citizens compared to white citizens, which would be consistent with the idea that there exists racism within the police.
+
+In case one, analyses can be carried out in a similar way to a full and accurate dataset: hopefully the effects of any missing data will even out and will not create a race bias. In case two, analyses can be carried out but with the caveat that, in the event that racism is found to exist, the nature of such racism is *at least* as bad as that which has been found. This is a sufficient reflection on the dataset along with the effect of missing data, and hopefully justifies its use in this report.
+
+Another issue is that the data available on Kaggle lists only the people who were killed by police. Ideally, there would be information on all encounters so that more ideas could be explored:
+
+* How frequently are White/BAME citizens killed, compared to not killed for the same crime/carrying the same weapon?
+* Have police successfully captured suspects using methods other than shooting (pepper spray/taser) for similar situations? And does this vary between races?
+
+There are many more questions we can ask with information on the non-fatal detainment of suspects. Since this information is not available (probably because deescalated non-fatal incidents may remain undocumented), this analysis is necessarily restricted to the smaller subset of encounters that result in fatalities. As a result, to use an analogy, this analysis is effectively a post-mortem report, rather than a look at the entire hospital, including those who were discharged. For that reason we can only make comment on the characteristics of those who were killed, rather than the how the police treat every single incident. That's not to say that this subset is redundant; to return to the analogy, an awful lot can be found in post-mortems: how and why has this individual died? How many of these cases are similar? Could this death have been prevented? Do these deaths occur more often in some races than others?

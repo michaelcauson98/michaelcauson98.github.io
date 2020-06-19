@@ -2,11 +2,14 @@ name: "my-website"
 navbar:
   title: "Black Lives Matter"
   left:
-    - text: "Home"
+    - text: "Motivation"
       href: index.html
-    - text: "About"
-      href: about.html
-      
+    - text: "A Brief Look"
+      href: BriefSummary.html
+    - text: "Deaths Per Capita"
+      href: dpc.html
+    - text: "Weapons Used"
+      href: WeaponsUsed.html
 output:
   html_document:
     theme: cosmo

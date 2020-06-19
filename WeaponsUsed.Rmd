@@ -1,0 +1,74 @@
+---
+title: "Weapons Used"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(gapminder)
+library(DT)
+library(htmlwidgets)
+library(base)
+library(hablar)
+library(tidyr)
+library(viridis)
+library(hrbrthemes)
+```
+
+```{r Alleged Weapons,echo = FALSE,fig.width=12,fig.height=8}
+
+white_weapons <- subset(police_killings,Victim.s.race == "White")$Alleged.Weapon..Source..WaPo.
+black_weapons <- subset(police_killings,Victim.s.race == "Black")$Alleged.Weapon..Source..WaPo.
+hispanic_weapons <- subset(police_killings,Victim.s.race == "Hispanic")$Alleged.Weapon..Source..WaPo.
+asian_weapons <- subset(police_killings,Victim.s.race == "Asian")$Alleged.Weapon..Source..WaPo.
+nativeA_weapons <- subset(police_killings,Victim.s.race == "Native American")$Alleged.Weapon..Source..WaPo.
+PI_weapons <- subset(police_killings,Victim.s.race == "Pacific Islander")$Alleged.Weapon..Source..WaPo.
+unknown_weapons <- subset(police_killings,Victim.s.race == "Unknown race")$Alleged.Weapon..Source..WaPo.
+Unknown_weapons <- subset(police_killings,Victim.s.race == "Unknown Race")$Alleged.Weapon..Source..WaPo.
+
+weapons = unique(police_killings$Alleged.Weapon..Source..WaPo.)
+weapons_mat <- matrix(0,173,4)
+weapons_mat[,1] <- weapons
+
+for (i in 1:173){
+    white = sum(white_weapons == weapons[i])
+    black = sum(black_weapons == weapons[i])
+    asian = sum(asian_weapons == weapons[i])
+    hispanic = sum(hispanic_weapons == weapons[i])
+    native = sum(nativeA_weapons == weapons[i])
+    PI = sum(PI_weapons == weapons[i])
+    unknown = sum(unknown_weapons == weapons[i])
+    Unknown = sum(Unknown_weapons == weapons[i])
+    BAME = black + asian + hispanic + native + PI
+    Unknown = Unknown + unknown
+    
+    weapons_mat[i,2] = white
+    weapons_mat[i,3] = BAME
+    weapons_mat[i,4] = Unknown
+    
+}
+
+weapons <- data.frame(weapons_mat[,1],weapons_mat[,2],weapons_mat[,3],weapons_mat[,4])
+
+weapons = weapons %>%
+    rename(Weapon = weapons_mat...1.,White = weapons_mat...2.,BAME = weapons_mat...3.,Unknown = weapons_mat...4.)
+
+weapons = weapons %>%
+    convert(num(2:4))
+
+df <- gather(weapons,"Race","Count",White:Unknown)
+df <- df[df$Count>20,]
+df <- df[-c(9),]
+df[4,3] = 216
+df <- df[-18,]
+df[12,3] = 216 + 41 
+
+ggplot(df, aes(fill=Race, y=Count, x=Weapon)) + 
+    geom_bar(position="stack", stat="identity") +
+    ggtitle("Alleged Weapons Prior to Death") +
+    theme_ipsum() +
+    xlab("")+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5,size=14))+     scale_fill_brewer(palette="Paired")+theme_minimal()
+
+```
