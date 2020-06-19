@@ -17,13 +17,13 @@ library(viridis)
 library(hrbrthemes)
 ```
 
-Catalysed by the killing of George Floyd, police departments across the US have come under public scrutiny. This was just one of the many recorded examples of police brutality against BAME citizens which, for many, was the final straw in remaining compliant. In light of this, data collected mainly from [Washington Post](https://github.com/washingtonpost/data-police-shootings), [FiveThirtyEight](https://projects.fivethirtyeight.com/republicans-democrats-cities/) and US Census Data may be used to investigate the extent of police misconduct and, further to this, to uncover institutionalised racism that is woven through the fabric of the police force.
+Catalysed by the killing of George Floyd, police departments across the US have come under public scrutiny. This was just one of the many recorded examples of police brutality against BAME citizens which, for many, was the final straw in remaining compliant. In light of this, data collected mainly from [Washington Post](https://github.com/washingtonpost/data-police-shootings), [FiveThirtyEight](https://projects.fivethirtyeight.com/republicans-democrats-cities/) and US Census Data may be used to visualise disparity between the treatment of White citizens compared to BAME citizens.
 
 <br>
 
 ## The Data
 
-A brief snippet of the data can be seen below. There are only 200 rows shown, but the dataset actually covers the deaths of 7907 people. Some of the more important columns have been included in the interest of brevity, however there is much more information available.
+A brief snippet of the data can be seen below. There are only 200 rows shown, but the data set actually covers the deaths of 7907 people. Some of the more important columns have been included in the interest of brevity, however there is much more information available.
 
 ```{r Police Killings Data,echo = FALSE}
 police_killings <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_killings.csv",header = TRUE)
@@ -31,7 +31,7 @@ police_killings2 <- police_killings[c(1:200),c(1,2,3,4,8,12,13,14,19,20)]
 datatable(police_killings2, options = list(pageLength = 5,pageWidth=5),rownames = FALSE,colnames = c("Victim","Age","Sex","Race","City","Responsible Police Agency","Cause of Death","Brief Description","Armed?","Alleged Weapon"))
 ```
 
-In many cases, the use of a guns by the police was completely necessary and lawful (the accessibility of guns to the general US public is another debate entirely). Undoubtedly there are instances where the police saved innocent lives, one need only take a look at some of the data above. It's dangerous in statistics to advocate the use of anecdotes to argue a point, but I deem it necessary in this case to at least prove the point that there are instances of complete lapse in judgment, to put it mildly.
+In many cases, the use of a guns by the police was completely necessary to protect innocent civilians' lives (the accessibility of lethal weapons to the American public is another debate entirely). A look at some of the data above will show this. It's dangerous in statistics to advocate the use of anecdotes to argue a point, however it's necessary in this case to at least prove the point that there are instances of complete lapse in judgment, to put it mildly.
 
 <br>
 

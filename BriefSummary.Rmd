@@ -25,4 +25,4 @@ df <- rbind(data.frame(x = FinalData$White.deaths, Race ='White'),data.frame(x =
 ggplot(df, aes(x, group=Race, col=Race)) + geom_density(position=position_dodge(width = 0)) + xlab('Deaths') + ylab("Density") 
 ```
 
-Perhaps this is a little misleading since this plot hasn't been scaled by population size. A [US Census](https://www.census.gov/quickfacts/fact/table/US/RHI125218) estimated that 60.4% of the US population is 'White alone, not Hispanic nor Latino'. In other words, even if we scaled this by number of citizens of each race, say deaths per hundred thousand people, the characteristics of the above plot is only amplified. 
+Perhaps this is a little misleading since this plot hasn't been scaled by population size. A [US Census](https://www.census.gov/quickfacts/fact/table/US/RHI125218) estimated that 60.4% of the US population are 'White alone, not Hispanic nor Latino'. In other words, even if we scaled this by number of citizens of each race, say deaths per hundred thousand people, the characteristics of the above plot is only amplified. 

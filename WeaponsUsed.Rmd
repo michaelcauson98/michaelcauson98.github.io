@@ -72,3 +72,6 @@ ggplot(df, aes(fill=Race, y=Count, x=Weapon)) +
     xlab("")+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5,size=14))+     scale_fill_brewer(palette="Paired")+theme_minimal()
 
 ```
+
+We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population.
+

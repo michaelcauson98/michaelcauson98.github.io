@@ -300,58 +300,8 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>white_weapons &lt;- subset(police_killings,Victim.s.race == &quot;White&quot;)$Alleged.Weapon..Source..WaPo.
-black_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Black&quot;)$Alleged.Weapon..Source..WaPo.
-hispanic_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Hispanic&quot;)$Alleged.Weapon..Source..WaPo.
-asian_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Asian&quot;)$Alleged.Weapon..Source..WaPo.
-nativeA_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Native American&quot;)$Alleged.Weapon..Source..WaPo.
-PI_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Pacific Islander&quot;)$Alleged.Weapon..Source..WaPo.
-unknown_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Unknown race&quot;)$Alleged.Weapon..Source..WaPo.
-Unknown_weapons &lt;- subset(police_killings,Victim.s.race == &quot;Unknown Race&quot;)$Alleged.Weapon..Source..WaPo.
-
-weapons = unique(police_killings$Alleged.Weapon..Source..WaPo.)
-weapons_mat &lt;- matrix(0,173,4)
-weapons_mat[,1] &lt;- weapons
-
-for (i in 1:173){
-    white = sum(white_weapons == weapons[i])
-    black = sum(black_weapons == weapons[i])
-    asian = sum(asian_weapons == weapons[i])
-    hispanic = sum(hispanic_weapons == weapons[i])
-    native = sum(nativeA_weapons == weapons[i])
-    PI = sum(PI_weapons == weapons[i])
-    unknown = sum(unknown_weapons == weapons[i])
-    Unknown = sum(Unknown_weapons == weapons[i])
-    BAME = black + asian + hispanic + native + PI
-    Unknown = Unknown + unknown
-    
-    weapons_mat[i,2] = white
-    weapons_mat[i,3] = BAME
-    weapons_mat[i,4] = Unknown
-    
-}
-
-weapons &lt;- data.frame(weapons_mat[,1],weapons_mat[,2],weapons_mat[,3],weapons_mat[,4])
-
-weapons = weapons %&gt;%
-    rename(Weapon = weapons_mat...1.,White = weapons_mat...2.,BAME = weapons_mat...3.,Unknown = weapons_mat...4.)
-
-weapons = weapons %&gt;%
-    convert(num(2:4))
-
-df &lt;- gather(weapons,&quot;Race&quot;,&quot;Count&quot;,White:Unknown)
-df &lt;- df[df$Count&gt;20,]
-df &lt;- df[-c(9),]
-df[4,3] = 216
-df &lt;- df[-18,]
-df[12,3] = 216 + 41 
-
-ggplot(df, aes(fill=Race, y=Count, x=Weapon)) + 
-    geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
-    ggtitle(&quot;Alleged Weapons Prior to Death&quot;) +
-    theme_ipsum() +
-    xlab(&quot;&quot;)+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5,size=14))+     scale_fill_brewer(palette=&quot;Paired&quot;)+theme_minimal()</code></pre>
 <p><img src="WeaponsUsed_files/figure-html/Alleged%20Weapons-1.png" width="1152" /></p>
+<p>We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was ‘unclear’ or ‘undetermined’ whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population.</p>
 
 
 
