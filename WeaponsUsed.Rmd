@@ -111,6 +111,8 @@ for (i in 1:822){
 }
 
 df <- df[-c(36,86,87,94,154,169,184,190,201,213,553,559,672),]
+df <- df %>%
+  subset(df$Race != "Unknown Race")
 
 ggplot(df, aes(x=(as.numeric(Age)), group=Race, col=Race)) + geom_density(position=position_dodge(width = 0)) + xlab('Age') + ylab("Density") + scale_x_discrete(breaks=seq(0,80,20)) + theme_bw()
 
