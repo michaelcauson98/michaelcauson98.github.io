@@ -17,7 +17,25 @@ library(viridis)
 library(hrbrthemes)
 ```
 
-Catalysed by the killing of George Floyd, police departments across the US have come under public scrutiny. This was just one of the many recorded examples of police brutality against BAME citizens which, for many, was the final straw in remaining compliant. In light of this, data collected mainly from [Washington Post](https://github.com/washingtonpost/data-police-shootings), [FiveThirtyEight](https://projects.fivethirtyeight.com/republicans-democrats-cities/) and US Census Data may be used to visualise disparity between the treatment of White citizens compared to BAME citizens.
+Catalysed by the killing of George Floyd, police departments across the US have come under public scrutiny. This was just one of the many recorded examples of police brutality against BAME citizens which, for many, was the final straw in remaining compliant. In light of this, data collected mainly from [Washington Post](https://github.com/washingtonpost/data-police-shootings), [FiveThirtyEight](https://projects.fivethirtyeight.com/republicans-democrats-cities/) and US Census Data may be used to visualise disparity in treatment of citizens of different races.
+
+<br>
+
+## Aims of the Website
+
+From the title of this website, it's obvious what my own opinion is. Though, this website is less of an attempt to voice my own opinion (which is inarticulate for matters this sensitive anyway) and more of an attempt to leave visuals to:
+
+1. Aid arguments of people supporting equality of treatment of BAME people 
+2. Challenge opinions of those who deny the existence of maltreatment towards BAME people
+
+What this website will not do is attempt to explain why the visuals look the way they do- the complexity of racial injustice that is interwoven within society is hard to unpick for every plot and is the subject of academics across the world. Most of these explanations point towards a few factors:
+
+* Historically: hundreds of years of slavery, followed by Jim Crow laws that segregated and alienated ethnic minorities. As a result of this, there is still 'hereditary' racism, that is passed down generations.
+* Recently: poor schooling and funding for areas with a high BAME population, leading to less high-paid job opportunities, leading to higher crime rates due to depravity. Since US states often have large sentences for petty crimes (especially repeated offenses), a high proportion of the BAME population in these areas are then incarcerated, leaving those individuals with a criminal record which means even job opportunities (perpetuating more crime) and their children who enter the same loop, with the added effect of being parentless. And so on.
+
+Netflix's '13th' explores the idea that the 13th amendment, which abolishes slavery, contains the exception clause in which slavery is illegal 'except as a punishment for crime'. One of the key points is that political racism never ended, it is now just disguised as a prison system that enslaves a high proportion of the BAME population, removes their rights and exploits them as unpaid workers. In the context of this website, deaths of BAME citizens may be amplified by the persecution by individuals within the police, whether this is influenced by conscious or unconscious prejudice.
+
+Hopefully, the plots will speak for themselves and a detailed explanation as to what they infer isn't necessary. In the interest of transparency and to avoid accusations of manipulating data to push an agenda, all code used on this website is published on [Github](https://github.com/michaelcauson98/michaelcauson98.github.io).
 
 <br>
 
@@ -45,21 +63,25 @@ In many cases, the use of a guns by the police was completely necessary to prote
 
 ## Limitations
 
-Whilst there is a lot of data present, the size of the dataset is certainly a lower bound for the number of citizens killed by police- much of the information has been attained through exhaustive search of police records and news articles. As a result there are a few problems in our analysis: 
+Whilst there is a lot of data present, the size of the data set is certainly a lower bound for the number of citizens killed by police- much of the information has been attained through exhaustive search of police records and news articles. As a result, there are a few problems with its analysis: 
 
-* Reliance on police records for data is to undermine the intrinsic assumption that there exists misconduct within the police. It relies on the police reports being true, even without a bodycam present.
-* Though I'm sure the list of killings is almost entirely exhaustive, it is likely that certain reports or articles have 'slipped through the net' or have remained undocumented altogether. After all, the very nature of this investigation is sparked by alleged police inadequacy.
+* Reliance on police records for data is to undermine the intrinsic assumption that there exists misconduct within the police. It relies on the police reports being true, even without a body camera present.
+* Though I'm sure the list of killings is almost entirely exhaustive, it is likely that certain reports or articles have 'slipped through the net' or have remained undocumented altogether. After all, the very nature of this website is sparked by well documented police inadequacy.
 
-If the data collected is full and accurate, then any analyses or statements made are on solid foundations. If, however, some data is missing, this will likely manifest itself into two categories:
+If the data collected is full and accurate, then any analyses or graphs made are on solid foundations. If, however, some data is missing, this will likely manifest itself into two categories:
 
-1. A **homogeneously missing** dataset in which reports are 'lost' at similar rates regardless of the race of citizen.
-2. A **biasedly missing** dataset in which reports are 'lost' more frequently in incidents involving BAME citizens compared to white citizens, which would be consistent with the idea that there exists racism within the police.
+1. A **homogeneously missing** data set in which reports are 'lost' at similar rates regardless of the race of citizen.
+2. A **biasedly missing** data set in which reports are 'lost' more frequently in incidents involving BAME citizens compared to white citizens, which would be consistent with the idea that there exists racism within the police.
 
-In case one, analyses can be carried out in a similar way to a full and accurate dataset: hopefully the effects of any missing data will even out and will not create a race bias. In case two, analyses can be carried out but with the caveat that, in the event that racism is found to exist, the nature of such racism is *at least* as bad as that which has been found. This is a sufficient reflection on the dataset along with the effect of missing data, and hopefully justifies its use in this report.
+In case one, analyses can be carried out in a similar way to a full and accurate data set: hopefully the effects of any missing data will even out and will not create a race bias. In case two, analyses can be carried out but with the caveat that, in the event that racism appears to exist, the nature of such racism is *at least* as bad as that which has been found.
 
-Another issue is that the data available on Kaggle lists only the people who were killed by police. Ideally, there would be information on all encounters so that more ideas could be explored:
+Another issue is that the data available on [Kaggle](https://www.kaggle.com/jpmiller/police-violence-in-the-us) lists only the people who were killed by police. Ideally, there would be information on all encounters, fatal and non-fatal, so that more ideas could be explored:
 
 * How frequently are White/BAME citizens killed, compared to not killed for the same crime/carrying the same weapon?
 * Have police successfully captured suspects using methods other than shooting (pepper spray/taser) for similar situations? And does this vary between races?
 
-There are many more questions we can ask with information on the non-fatal detainment of suspects. Since this information is not available (probably because deescalated non-fatal incidents may remain undocumented), this analysis is necessarily restricted to the smaller subset of encounters that result in fatalities. As a result, to use an analogy, this analysis is effectively a post-mortem report, rather than a look at the entire hospital, including those who were discharged. For that reason we can only make comment on the characteristics of those who were killed, rather than the how the police treat every single incident. That's not to say that this subset is redundant; to return to the analogy, an awful lot can be found in post-mortems: how and why has this individual died? How many of these cases are similar? Could this death have been prevented? Do these deaths occur more often in some races than others?
+There are many more questions we can ask with information on the non-fatal detainment of suspects. Since this information is not available (probably because deescalated non-fatal incidents may remain undocumented), analyses is necessarily restricted to the smaller subset of encounters that result in fatalities. As a result, to use an analogy, this analysis is effectively a post-mortem report, rather than a look at the entire hospital, including those who were discharged. For that reason we can only visualise the characteristics of those who were killed, rather than the how the police treat every single incident. That's not to say that this subset is redundant; to return to the analogy, an awful lot can be found in post-mortems: how and why has this individual died? How many of these cases are similar? Could this death have been prevented? Do these deaths occur more often in some races than others?
+
+
+
+

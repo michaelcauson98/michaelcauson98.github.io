@@ -18,6 +18,7 @@ library(hrbrthemes)
 ```
 
 ```{r Alleged Weapons,echo = FALSE,fig.width=12,fig.height=8}
+police_killings <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_killings.csv",header = TRUE)
 
 white_weapons <- subset(police_killings,Victim.s.race == "White")$Alleged.Weapon..Source..WaPo.
 black_weapons <- subset(police_killings,Victim.s.race == "Black")$Alleged.Weapon..Source..WaPo.
@@ -74,4 +75,53 @@ ggplot(df, aes(fill=Race, y=Count, x=Weapon)) +
 ```
 
 We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population.
+
+
+```{r Unarmed,echo=FALSE,fig.width=12,fig.height=8}
+unarmed_deaths <- police_killings %>%
+  subset(police_killings$Alleged.Weapon..Source..WaPo. == "unarmed")
+
+df <- data.frame(unarmed_deaths$Victim.s.race,unarmed_deaths$Victim.s.age) %>%
+  rename(Race = unarmed_deaths.Victim.s.race, Age = unarmed_deaths.Victim.s.age)
+
+for (i in 1:822){
+  if (df[i,1] == "Black"){
+    df[i,1] = "BAME"
+  }
+  else if (df[i,1] == "Hispanic"){
+    df[i,1] = "BAME"
+  }
+  
+  else if (df[i,1] == "Asian"){
+    df[i,1] = "BAME"
+  }
+  
+   else if (df[i,1] == "Native American"){
+    df[i,1] = "BAME"
+   }
+  
+   else if (df[i,1] == "Pacific Islander"){
+    df[i,1] = "BAME"
+   }
+  
+   else if (df[i,1] == "Unknown race"){
+    df[i,1] = "Unknown Race"
+  }
+  
+}
+
+df <- df[-c(36,86,87,94,154,169,184,190,201,213,553,559,672),]
+
+ggplot(df, aes(x=(as.numeric(Age)), group=Race, col=Race)) + geom_density(position=position_dodge(width = 0)) + xlab('Age') + ylab("Density") + scale_x_discrete(breaks=seq(0,80,20)) + theme_bw()
+
+```
+ 
+Of those who were unarmed when killed, the distribution of ages is similar in BAME people to White people, though there is a clear offset in age at which they are killed. Within their respective populations, a higher share of BAME individuals are killed at younger ages compared to young White individuals, when unarmed. This could either be because more young BAME individuals are involved in these fatal altercations compared to young White individuals, or because police in the US are more inclined to be more hostile to unarmed young BAME individuals than unarmed young White individuals. Since the populations of all killed (not just unarmed people) don't exhibit this same offset between race, the offset characteristic appears to be a *result of being unarmed*. This would infer that, within the BAME population, unarmed young citizens are treated with more hostility than young unarmed White citizens are, within the White population.
+
+There appears to be a prejudice against young BAME people that results in needless killing of unarmed people. This could be a result of:
+
+* Explicit racist beliefs of individual officers in US Police Departments that leads to the direct persecution of young BAME individuals
+* Implicit racial prejudice that police officers may not know exists within themselves but manifests itself nevertheless
+* A mixture of the two within the entire police force
+
 
