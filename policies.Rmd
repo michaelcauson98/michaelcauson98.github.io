@@ -1,0 +1,26 @@
+---
+title: "Untitled"
+author: "Michael Causon"
+date: "23/06/2020"
+output: html_document
+---
+
+```{r Polices, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(gapminder)
+library(DT)
+library(htmlwidgets)
+library(base)
+library(hablar)
+library(tidyr)
+library(viridis)
+library(hrbrthemes)
+police_policies <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_policies.csv",header = TRUE)
+police_policies = police_policies[-c(1),]
+police_policies[is.na(police_policies)] = 0
+police_policies <- merge(police_policies,FinalData,by = "City")
+police_policies <- mutate(police_policies,Total.Deaths = White.deaths + Unknown.Race.deaths + BAME.deaths)
+h <- ggplot(police_policies,aes(Total.Deaths,Total)) + geom_point()
+```

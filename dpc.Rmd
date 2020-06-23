@@ -17,9 +17,9 @@ library(viridis)
 library(hrbrthemes)
 ```
 
-The below plot shows a transformation of the number of White deaths per capita (White population) vs the number of BAME deaths per capita (BAME population). The black line represents an equal death rate in which police kill citizens of each race at equal rates.
+The below plot shows a transformation of the number of White deaths per capita (White population) vs the number of BAME deaths per capita (BAME population) within each police institution. The black line represents an equal death rate in which police kill citizens of each race at equal rates.
 
-```{r Deaths per Captia,echo = FALSE}
+```{r Deaths per Captia,echo = FALSE,fig.align='center'}
 FinalData <- mutate(FinalData,BAME = FinalData$Black + FinalData$Hispanic + FinalData$Asian + FinalData$Amer..Indian + FinalData$Hawaiian + FinalData$Two.or.more.races)
 FinalData <- mutate(FinalData,White.Deaths.Per.Capita = FinalData$White.deaths/FinalData$White)
 FinalData <- mutate(FinalData,BAME.Deaths.Per.Capita = FinalData$BAME.deaths/FinalData$BAME)
@@ -32,7 +32,14 @@ p <- ggplot(df,aes(log10(FinalData.White.Deaths.Per.Capita+1),log10(FinalData.BA
 ggplotly(p,tooltip = "text")
 ```
 
-First, let's make no assumptions about the nature of the data and just look at the plot. Clearly, there's a difference in the deaths per capita between the two groups. States with larger populations tend to fit a more linear trend, with a gradient greater than the black line (representing one). Some smaller populations tend to diverge from the trend towards more White or BAME deaths per capita, but in a similar manner in each direction. For this reason (and without delving into each incident on a case-by-case basis), it is hard to immediately point a finger at a particular department from this plot alone. If we say Orlando Police Department is discriminatory to BAME citizens, we must equally argue that Laredo Police Department is discriminatory to White citizens. That's not to say that Orlando Police Department doesn't exhibit institutional racism, only that we cannot argue it from this plot alone.
+Clearly the vast majority of the data points lie above the equal rates line.
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<font size = "2">
 
 ##### Justifying the log transformation
 If we made the assumption that there was a linear relationship between the variables, we would be interested in the value of the gradient of the line of best fit. This straight line will have the form: $log_{10}(BDPC+1)=alog_{10}(WDPC+1)+b$ or equivalently $BDPC=(WDPC+1)^{a}+10^{b}-1$. For small WDPC, we can use the expansion $(1+x)^{a}\approx1+ax$ for small $x$ to give $BDPC\approx 1+a(WDPC)+10^{b}-1=a(WDPC)+10^{b}$. So, for small values of deaths per capita, this means that the log transformation has made the plot more clear, but hasn't changed the meaning of parameter $a$. In either case, it effectively scales deaths per capita of White citizens to BAME citizens. One can visibly see that $a>1$, which is sufficient to claim that BAME citizens are killed more frequently than White citizens, when scaled by population.
+
+</font>

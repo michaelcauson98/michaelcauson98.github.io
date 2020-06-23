@@ -8,8 +8,10 @@ navbar:
       href: BriefSummary.html
     - text: "Deaths Per Capita"
       href: dpc.html
-    - text: "Weapons Used"
-      href: WeaponsUsed.html
+    - text: "Unarmed"
+      href: unarmed.html
+    - text: "Police Policies"
+      href: policies.html
 output:
   html_document:
     theme: cosmo

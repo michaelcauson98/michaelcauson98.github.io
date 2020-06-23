@@ -1,5 +1,5 @@
 ---
-title: "Weapons Used"
+title: "Unarmed"
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +17,7 @@ library(viridis)
 library(hrbrthemes)
 ```
 
-```{r Alleged Weapons,echo = FALSE,fig.width=12,fig.height=8}
+```{r Alleged Weapons,echo = FALSE,fig.width=12,fig.height=8,fig.align='center'}
 police_killings <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_killings.csv",header = TRUE)
 
 white_weapons <- subset(police_killings,Victim.s.race == "White")$Alleged.Weapon..Source..WaPo.
@@ -68,16 +68,22 @@ df[12,3] = 216 + 41
 
 ggplot(df, aes(fill=Race, y=Count, x=Weapon)) + 
     geom_bar(position="stack", stat="identity") +
-    ggtitle("Alleged Weapons Prior to Death") +
     theme_ipsum() +
     xlab("")+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5,size=14))+     scale_fill_brewer(palette="Paired")+theme_minimal()
 
 ```
 
-We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population.
+We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population. Since we know over 60% of the US population is White, any findings are exaggerated if we scaled by population.
+
+```{r Unarmed Data,echo = FALSE}
+unarmed_table <- weapons[c(13,2,8),]
+head(unarmed_table)
+```
+
+In these circumstances, despite representing a smaller population, BAME people were killed unjustifiably more frequently than White people. Below is a density plot for those who were unarmed and killed in each group:
 
 
-```{r Unarmed,echo=FALSE,fig.width=12,fig.height=8}
+```{r Unarmed,echo=FALSE,fig.width=12,fig.height=8,fig.align='center'}
 unarmed_deaths <- police_killings %>%
   subset(police_killings$Alleged.Weapon..Source..WaPo. == "unarmed")
 
@@ -118,12 +124,9 @@ ggplot(df, aes(x=(as.numeric(Age)), group=Race, col=Race)) + geom_density(positi
 
 ```
  
-Of those who were unarmed when killed, the distribution of ages is similar in BAME people to White people, though there is a clear offset in age at which they are killed. Within their respective populations, a higher share of BAME individuals are killed at younger ages compared to young White individuals, when unarmed. This could either be because more young BAME individuals are involved in these fatal altercations compared to young White individuals, or because police in the US are more inclined to be more hostile to unarmed young BAME individuals than unarmed young White individuals. Since the populations of all killed (not just unarmed people) don't exhibit this same offset between race, the offset characteristic appears to be a *result of being unarmed*. This would infer that, within the BAME population, unarmed young citizens are treated with more hostility than young unarmed White citizens are, within the White population.
+Of those who were unarmed when killed, the characteristics of their age distribution is similar regardless of race, but there appears to be an offset between the two. Young BAME people are killed more at younger ages than young White people, within their respective population. Note: a density plot doesn't necessarily compare the number of people who were killed, more how they were distributed across age groups- here, we are not comparing the numbers who died within each race but the ages at which they died.
 
-There appears to be a prejudice against young BAME people that results in needless killing of unarmed people. This could be a result of:
 
-* Explicit racist beliefs of individual officers in US Police Departments that leads to the direct persecution of young BAME individuals
-* Implicit racial prejudice that police officers may not know exists within themselves but manifests itself nevertheless
-* A mixture of the two within the entire police force
+
 
 
