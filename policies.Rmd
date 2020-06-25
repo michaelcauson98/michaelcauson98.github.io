@@ -1,11 +1,21 @@
 ---
-title: "Untitled"
-author: "Michael Causon"
-date: "23/06/2020"
-output: html_document
+title: "Police Policies"
 ---
 
-```{r Polices, include=FALSE}
+Each police department works under the state legislature that they are acting in. For cases involving fatal encounters, the relevant laws are any combination of:
+
+* Requires deescalation
+* Has use of force continuum (dealing with crime in a step-by-step manner, from a brief warning through to shooting)
+* Bans chokeholds and strangleholds
+* Requires warning before shooting
+* Restricts shooting at moving vehicles
+* Requires exhausting all other means before shooting
+* Duty to intervene (challenging the actions of other police officers)
+* Requires comprehensive reporting
+
+To test the effects of state policies, we can compare the predictive power of a linear model **without** the inclusion of policies compared to a linear model **with** the use of policies. <br>
+
+```{r without polices, echo = FALSE}
 library(ggplot2)
 library(dplyr)
 library(plotly)
@@ -17,10 +27,51 @@ library(hablar)
 library(tidyr)
 library(viridis)
 library(hrbrthemes)
+library(MASS)
 police_policies <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_policies.csv",header = TRUE)
 police_policies = police_policies[-c(1),]
 police_policies[is.na(police_policies)] = 0
 police_policies <- merge(police_policies,FinalData,by = "City")
 police_policies <- mutate(police_policies,Total.Deaths = White.deaths + Unknown.Race.deaths + BAME.deaths)
-h <- ggplot(police_policies,aes(Total.Deaths,Total)) + geom_point()
+police_policies <- mutate(police_policies,Av.Violent.Crimes = (Violent.crimes.2013..if.reported.by.agency. + Violent.crimes.2014..if.reported.by.agency. + Violent.crimes.2015..if.reported.by.agency. + Violent.crimes.2016..if.reported.by.agency. + Violent.crimes.2017..if.reported.by.agency. + Violent.crimes.2018..if.reported.by.agency.)/6)
+police_policies <- mutate(police_policies,Av.Arrests = (X2014.Total.Arrests + X2015.Total.Arrests + X2016.Total.Arrests + X2017.Total.Arrests + X2018.Total.Arrests)/5)
+police_policies <- police_policies[,c(2:9,14,42:43,11,14,41)]
+police_policies <- police_policies[-c(11,38,74,77),]
+
+fit.without.policies <- glm(Total.Deaths~ Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
+summary(fit.without.policies)
+predict.fit.without.policies <- predict(fit.without.policies,type="response")
+
 ```
+<br>
+
+Clearly, the average violent crimes and arrests over the previous five years, along with the total population of the city gives a decent approximation, with 50% of the residuals lying between -6.73 and 4.6. These covariates appear very significant, looking at their p-values. But do the above listed state policies improve the model? 
+
+<br>
+
+```{r with polices, echo = FALSE}
+
+fit.with.policies <- glm(Total.Deaths~ Requires.De.Escalation + Has.Use.of.Force.Continuum + Bans.Chokeholds.and.Strangleholds + Requires.Warning.Before.Shooting + Restricts.Shooting.at.Moving.Vehicles + Requires.Exhaust.All.Other.Means.Before.Shooting + Duty.to.Intervene + Requires.Comprehensive.Reporting + Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
+summary(fit.with.policies)
+predict.fit.with.policies <- predict(fit.with.policies,type="response")
+
+```
+
+<br>
+
+None of the policies appear to have an effect, once the previous covariates have been accounted for. Further, this is the case for each policy when tested alone. We can see the effect is negligible by looking at the predictive plots with and without policies:
+
+<br>
+
+```{r Plot Comparison, echo = FALSE,fig.width=9,fig.height=8}
+library(gridExtra)
+df3 <- data.frame(police_policies$Total.Deaths,predict.fit.with.policies,predict.fit.without.policies,police_policies$Total,police_policies$PD)
+plot <- ggplot(df3,aes(predict.fit.without.policies,police_policies.Total.Deaths,size = police_policies.Total,color="red",text = paste("",police_policies.PD,"<br>Population:",police_policies.Total))) + geom_point(alpha = 0.5) + scale_size(range = c(.1, 12), name="Population (M)")+theme(legend.position="none")+xlab("Model Prediction")+ylab("True Death Count")+coord_equal() + geom_abline(slope=1, intercept=0) + labs(title = "Without Policies")
+ggplotly(plot,tooltip = "text")
+
+```
+<br>
+
+The black line represents a perfect model where the model predicts the exact count every time. Since this model only contains 3 parameters, it's hard to point fingers at certain departments since there may be data out there that provides more information to better predict the data. However it gives a good idea of the police departments who don't fit the general trend, based on population size, average arrests and average violent crimes. Police departments above the black line kill citizens more than the model predicts, and departments below the line kill citizens less than the model predicts. NYPD, in this plot and the one in the Deaths Per Capita tab, have shown that they have a low deaths per capita for all races, and also kill far less frequently than the model predicts.
+
+
