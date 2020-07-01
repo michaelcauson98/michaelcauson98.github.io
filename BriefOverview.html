@@ -11,7 +11,7 @@
 
 
 
-<title>Unarmed Deaths</title>
+<title>A Brief Overview</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -298,23 +298,31 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Unarmed Deaths</h1>
+<h1 class="title toc-ignore">A Brief Overview</h1>
 
 </div>
 
 
-<p>Of those who were killed, the below figure shows the weapon in which they were armed with, if any.</p>
-<p><img src="unarmed_files/figure-html/Alleged%20Weapons-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. We are also interested in those who were killed when it was ‘unclear’ or ‘undetermined’ whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population. Since we know over 60% of the US population is White, any findings are exaggerated if we scaled by population.</p>
-<pre><code>## # A tibble: 3 x 4
-##   Weapon       White  BAME Unknown
-##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-## 1 unarmed        322   461      39
-## 2 unclear         66   114      37
-## 3 undetermined   119   127      26</code></pre>
-<p>In these circumstances, despite representing a smaller population, BAME people were killed unjustifiably more frequently than White people. Below is a density plot for those who were unarmed and killed in each group:</p>
-<p><img src="unarmed_files/figure-html/Unarmed-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>Of those who were unarmed when killed, the characteristics of their age distribution is similar regardless of race, but there appears to be an offset between the two. Young BAME people are killed more at younger ages than young White people, within their respective population. Note: a density plot doesn’t necessarily compare the number of people who were killed, more how they were distributed across age groups- here, we are not comparing the numbers who died within each race but the ages at which they were killed.</p>
+<p>The plot below is an approximate density histogram for the number of citizens killed by each of the 100 police departments, broken down by race from 2013-2019 (inclusive). A quick look shows us that, in general, BAME citizens are killed in larger numbers across the 100 departments compared to white citizens.</p>
+<p><img src="BriefOverview_files/figure-html/Deaths%20Overview-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Perhaps this is a little misleading since this plot hasn’t been scaled by population size. A <a href="https://www.census.gov/quickfacts/fact/table/US/RHI125218">US Census</a> estimated that 60.4% of the US population are ‘White alone, not Hispanic nor Latino’. In other words, even if we scaled this by number of citizens of each race, say deaths per hundred thousand people, the characteristics of the above plot are only amplified.</p>
+<p><br></p>
+<style>
+p.comment {
+background-color: #DBDBDB;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-style: italic;
+}
+
+</style>
+<font size = "5">
+<p class="comment">
+“Police contacted Henry Lane shortly after midnight for unspecified reasons. Red Bluff Cpl. Stephen Harper shot and killed him when Lane threatened officers with a (walking) stick.”
+</p>
+<p></font></p>
 
 
 

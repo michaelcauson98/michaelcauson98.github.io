@@ -4,8 +4,8 @@ navbar:
   left:
     - text: "Motivation"
       href: index.html
-    - text: "A Brief Look"
-      href: BriefSummary.html
+    - text: "A Brief Overview"
+      href: BriefOverview.html
     - text: "Deaths Per Capita"
       href: dpc.html
     - text: "Unarmed"

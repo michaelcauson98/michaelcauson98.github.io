@@ -2,6 +2,8 @@
 title: "Police Policies"
 ---
 
+**Unlike the others, this page is concerned with police killings as a whole, regardless of race.**
+
 Each police department works under the state legislature that they are acting in. For cases involving fatal encounters, the relevant laws are any combination of:
 
 * Requires deescalation
@@ -14,6 +16,8 @@ Each police department works under the state legislature that they are acting in
 * Requires comprehensive reporting
 
 To test the effects of state policies, we can compare the predictive power of a linear model **without** the inclusion of policies compared to a linear model **with** the use of policies. <br>
+
+Without policies:
 
 ```{r without polices, echo = FALSE}
 library(ggplot2)
@@ -38,9 +42,10 @@ police_policies <- mutate(police_policies,Av.Arrests = (X2014.Total.Arrests + X2
 police_policies <- police_policies[,c(2:9,14,42:43,11,14,41)]
 police_policies <- police_policies[-c(11,38,74,77),]
 
-fit.without.policies <- glm(Total.Deaths~ Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
+fit.without.policies <- lm(Total.Deaths~ Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
 summary(fit.without.policies)
 predict.fit.without.policies <- predict(fit.without.policies,type="response")
+res.without.policies <- resid(fit.without.policies)
 
 ```
 <br>
@@ -49,9 +54,11 @@ Clearly, the average violent crimes and arrests over the previous five years, al
 
 <br>
 
+With policies:
+
 ```{r with polices, echo = FALSE}
 
-fit.with.policies <- glm(Total.Deaths~ Requires.De.Escalation + Has.Use.of.Force.Continuum + Bans.Chokeholds.and.Strangleholds + Requires.Warning.Before.Shooting + Restricts.Shooting.at.Moving.Vehicles + Requires.Exhaust.All.Other.Means.Before.Shooting + Duty.to.Intervene + Requires.Comprehensive.Reporting + Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
+fit.with.policies <- lm(Total.Deaths~ Requires.De.Escalation + Has.Use.of.Force.Continuum + Bans.Chokeholds.and.Strangleholds + Requires.Warning.Before.Shooting + Restricts.Shooting.at.Moving.Vehicles + Requires.Exhaust.All.Other.Means.Before.Shooting + Duty.to.Intervene + Requires.Comprehensive.Reporting + Total + Av.Violent.Crimes + Av.Arrests,data=police_policies)
 summary(fit.with.policies)
 predict.fit.with.policies <- predict(fit.with.policies,type="response")
 
@@ -59,7 +66,15 @@ predict.fit.with.policies <- predict(fit.with.policies,type="response")
 
 <br>
 
-None of the policies appear to have an effect, once the previous covariates have been accounted for. Further, this is the case for each policy when tested alone. We can see the effect is negligible by looking at the predictive plots with and without policies:
+None of the policies appear to have an effect, once the previous covariates have been accounted for. Further, this is the case for each policy when tested alone. To put a number on this, we can use an anova test for linear models:
+
+```{r anova,echo = FALSE}
+anova(fit.without.policies,fit.with.policies)
+```
+
+The meaning of the p-value (0.7742) is the probability of attaining a result as least as extreme as that observed, given the null hypothesis that there is no significant difference between the quality of the models. This result would point towards the models being of very similar predictive power, and the addition of the police policies isn't significant enough to be included. In context, it appears that once population, violent crime rates and arrest rates are accounted for, police policies seem to have no effect on how many people are killed by the police.
+
+We can also see the R-squared value is 0.6525, meaning that the variance in our model accounts for over 60% of the true variance in the data. This is pretty good for a model of such few variable, especially since human behavior is notoriously hard to model.
 
 <br>
 
@@ -72,6 +87,9 @@ ggplotly(plot,tooltip = "text")
 ```
 <br>
 
-The black line represents a perfect model where the model predicts the exact count every time. Since this model only contains 3 parameters, it's hard to point fingers at certain departments since there may be data out there that provides more information to better predict the data. However it gives a good idea of the police departments who don't fit the general trend, based on population size, average arrests and average violent crimes. Police departments above the black line kill citizens more than the model predicts, and departments below the line kill citizens less than the model predicts. NYPD, in this plot and the one in the Deaths Per Capita tab, have shown that they have a low deaths per capita for all races, and also kill far less frequently than the model predicts. Phoenix PD and St. Louis Metropolitan PD seem to be the exact opposite. In the last few years, St. Louis Metropolitan PD have been involved in a number of [controversies](https://en.wikipedia.org/wiki/Metropolitan_Police_Department,_City_of_St._Louis#Controversies) which reinforces what the data shows.
+The black line represents a perfect model where the model predicts the exact count every time. Since this model only contains 3 parameters, it's hard to point fingers at certain departments since there may be data out there that provides more information to better predict the data. However it gives a rudimentary idea of the police departments who don't fit the general trend, based on population size, average arrests and average violent crimes. Police departments above the black line kill citizens more than the model predicts, and departments below the line kill citizens less than the model predicts. NYPD, in this plot and the one in the Deaths Per Capita tab, have shown that they have a low deaths per capita for all races, and also kill far less frequently than the model predicts. Phoenix PD and St. Louis Metropolitan PD seem to be the exact opposite. In the last few years, St. Louis Metropolitan PD have been involved in a number of [controversies](https://en.wikipedia.org/wiki/Metropolitan_Police_Department,_City_of_St._Louis#Controversies) which reinforces what the data shows.
 
+There's clearly big problems within certain departments. This model can't be used alone to make concrete accusations, but it can be used to show how predictable the number of deaths is; three simple guesses were enough to explain most of the variability in the data. Since this model isn't bad, we can conceivably ask questions about those departments who have large residuals: are there any key differences in how NYPD and Phoenix PD handle crime? What factors might be consistent in those with high residuals? These questions may lead to answers that improve on this model but, for now, we can only speculate on guilty departments.
+
+At the very least, police policies appear insignificant in attempting to predict the number of killings a department is responsible for. This raises more questions: are the policies being implemented thoroughly enough? Are policies being ignored? Could new policies be introduced with more serious consequences?
 

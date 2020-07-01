@@ -17,9 +17,9 @@ library(viridis)
 library(hrbrthemes)
 ```
 
-The below plot shows a transformation of the number of White deaths per capita (White population) vs the number of BAME deaths per capita (BAME population) within each police institution. The black line represents an equal death rate in which police kill citizens of each race at equal rates.
+The below plot shows a transformation of the number of White deaths per capita (White population) vs the number of BAME deaths per capita (BAME population) within each police institution. The black line represents an equal death rate in which police kill citizens of each race at equal rates. The log transformation has been used to make the plot look clearer but without changing its interpretation.
 
-```{r Deaths per Captia,echo = FALSE,fig.align='center'}
+```{r Deaths per Captia,echo = FALSE,fig.align='center',fig.width=9,fig.height=8}
 FinalData <- mutate(FinalData,BAME = FinalData$Black + FinalData$Hispanic + FinalData$Asian + FinalData$Amer..Indian + FinalData$Hawaiian + FinalData$Two.or.more.races)
 FinalData <- mutate(FinalData,White.Deaths.Per.Capita = FinalData$White.deaths/FinalData$White)
 FinalData <- mutate(FinalData,BAME.Deaths.Per.Capita = FinalData$BAME.deaths/FinalData$BAME)
@@ -32,14 +32,23 @@ p <- ggplot(df,aes(log10(FinalData.White.Deaths.Per.Capita+1),log10(FinalData.BA
 ggplotly(p,tooltip = "text")
 ```
 
-Clearly the vast majority of the data points lie above the equal rates line.
+Clearly the vast majority of the data points lie above the equal rates line- BAME people are killed at a higher rate than White people across the vast majority of departments, when scaled by population size.
 
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br>
 
+<style>
+p.comment {
+background-color: #DBDBDB;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-style: italic;
+}
 
-<font size = "2">
-
-##### Justifying the log transformation
-If we made the assumption that there was a linear relationship between the variables, we would be interested in the value of the gradient of the line of best fit. This straight line will have the form: $log_{10}(BDPC+1)=alog_{10}(WDPC+1)+b$ or equivalently $BDPC=(WDPC+1)^{a}+10^{b}-1$. For small WDPC, we can use the expansion $(1+x)^{a}\approx1+ax$ for small $x$ to give $BDPC\approx 1+a(WDPC)+10^{b}-1=a(WDPC)+10^{b}$. So, for small values of deaths per capita, this means that the log transformation has made the plot more clear, but hasn't changed the meaning of parameter $a$. In either case, it effectively scales deaths per capita of White citizens to BAME citizens. One can visibly see that $a>1$, which is sufficient to claim that BAME citizens are killed more frequently than White citizens, when scaled by population.
-
+</style>
+<font size = "5">
+<p class="comment">
+"Euharlee police said 17-year-old Christopher Roupe pointed a gun at one of their officers on Feb. 14, when officers knocked on the door of the family's home to serve a probation warrant for Roupe's father. Family members, however, said the teen was holding a Nintendo Wii controller."
 </font>
+</p>

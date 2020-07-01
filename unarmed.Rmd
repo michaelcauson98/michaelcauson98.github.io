@@ -1,5 +1,5 @@
 ---
-title: "Unarmed"
+title: "Unarmed Deaths"
 ---
 
 ```{r setup, include=FALSE}
@@ -16,6 +16,8 @@ library(tidyr)
 library(viridis)
 library(hrbrthemes)
 ```
+
+Of those who were killed, the below figure shows the weapon in which they were armed with, if any.
 
 ```{r Alleged Weapons,echo = FALSE,fig.width=12,fig.height=8,fig.align='center'}
 police_killings <- read.csv("~/OneDrive/Documents/Kaggle/697683_1239276_bundle_archive/police_killings.csv",header = TRUE)
@@ -73,7 +75,7 @@ ggplot(df, aes(fill=Race, y=Count, x=Weapon)) +
 
 ```
 
-We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. Though we are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population. Since we know over 60% of the US population is White, any findings are exaggerated if we scaled by population.
+We are specifically interested in the third largest group- those who were shot and/or tasered despite not carrying a weapon. We are also interested in those who were killed when it was 'unclear' or 'undetermined' whether they were armed or not. It appears BAME people are killed more in these circumstances than White people, even before adjusting by population. Since we know over 60% of the US population is White, any findings are exaggerated if we scaled by population.
 
 ```{r Unarmed Data,echo = FALSE}
 unarmed_table <- weapons[c(13,2,8),]
@@ -81,7 +83,6 @@ head(unarmed_table)
 ```
 
 In these circumstances, despite representing a smaller population, BAME people were killed unjustifiably more frequently than White people. Below is a density plot for those who were unarmed and killed in each group:
-
 
 ```{r Unarmed,echo=FALSE,fig.width=12,fig.height=8,fig.align='center'}
 unarmed_deaths <- police_killings %>%
@@ -124,7 +125,7 @@ ggplot(df, aes(x=(as.numeric(Age)), group=Race, col=Race)) + geom_density(positi
 
 ```
  
-Of those who were unarmed when killed, the characteristics of their age distribution is similar regardless of race, but there appears to be an offset between the two. Young BAME people are killed more at younger ages than young White people, within their respective population. Note: a density plot doesn't necessarily compare the number of people who were killed, more how they were distributed across age groups- here, we are not comparing the numbers who died within each race but the ages at which they died.
+Of those who were unarmed when killed, the characteristics of their age distribution is similar regardless of race, but there appears to be an offset between the two. Young BAME people are killed more at younger ages than young White people, within their respective population. Note: a density plot doesn't necessarily compare the number of people who were killed, more how they were distributed across age groups- here, we are not comparing the numbers who died within each race but the ages at which they were killed.
 
 
 
