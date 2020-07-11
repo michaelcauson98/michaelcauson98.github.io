@@ -1,0 +1,9 @@
+---
+title: "Daily Remembrance"
+---
+
+df = load("BAME_unarmed_deaths.Rda")
+
+```{r Name,echo=FALSE}
+print(df[1,1])
+```

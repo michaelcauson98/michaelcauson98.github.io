@@ -12,6 +12,8 @@ navbar:
       href: unarmed.html
     - text: "Police Policies"
       href: policies.html
+    - text: "Daily Remembrance"
+      href: remembrance.html
 output:
   html_document:
     theme: cosmo
