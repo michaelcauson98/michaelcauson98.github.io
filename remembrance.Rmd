@@ -3,6 +3,38 @@ title: "Daily Remembrance"
 ---
 
 ```{r Name,echo=FALSE}
+count = 1
+library(rmarkdown)
 load("/Users/michaelcauson/OneDrive/Documents/BLM/Github Website/michaelcauson98.github.io/BAME_unarmed_deaths.Rda")
-print(BAME_unarmed_deaths[2,1])
+x = c(1:461)
+set.seed(5)
+BAME_condensed = BAME_unarmed_deaths[,c(1:26)]
+x = sample(x)
+todays_row = x[(count%%461)+1]
+
+name = BAME_condensed[todays_row,1]
+date = BAME_condensed[todays_row,6]
+age = BAME_condensed[todays_row,2]
+gender = BAME_condensed[todays_row,3]
+
+if (gender == "Male"){
+  pronoun = "He"
+  sex = "man"
+} else {
+  pronoun = "She"
+  sex = "woman"
+}
+  
+race = BAME_condensed[todays_row,4]
+city = BAME_condensed[todays_row,8]
+state = BAME_condensed[todays_row,9]
+agency = BAME_condensed[todays_row,12]
+cause = BAME_condensed[todays_row,13]
+desc = BAME_condensed[todays_row,14]
+
+
+s1 = paste(name, " was killed whilst unarmed on ",date," in ",city,", ",state," by ",agency, ". ",sep="")
+s2 = paste(pronoun," was a ",age," year old ",race," ",sex,".",sep = "")
+s3 = paste(" The cause of death was listed as '",tolower(cause),"'.",sep = "")
+print(paste(s1,s2,s3,sep = ""))
 ```
