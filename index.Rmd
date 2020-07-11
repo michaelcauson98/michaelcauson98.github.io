@@ -4,6 +4,7 @@ title: "Motivation"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(rmarkdown)
 library(ggplot2)
 library(dplyr)
 library(plotly)
