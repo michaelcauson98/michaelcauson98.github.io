@@ -3,7 +3,7 @@ title: "Daily Remembrance"
 ---
 
 ```{r Name,echo=FALSE}
-count = 20
+count = 24
 library(rmarkdown)
 load("/Users/michaelcauson/OneDrive/Documents/BLM/Github Website/michaelcauson98.github.io/BAME_unarmed_deaths.Rda")
 x = c(1:461)
